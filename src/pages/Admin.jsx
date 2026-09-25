@@ -3,7 +3,6 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
-
 const COLORS = {
   bg: '#0d0d0d', panel: '#171717', border: '#2a2a2a',
   text: '#f5f5f5', muted: '#999', accent: '#e63946',
