@@ -12,7 +12,7 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import SuccessPage from './pages/SuccessPage';
 import CheckoutPage from './pages/CheckoutPage';
 import AdminOrdersPage from './pages/AdminOrdersPage';
-
+import Admin from './pages/Admin';
 function App() {
     return (
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
@@ -27,6 +27,7 @@ function App() {
                                 <Route path="/product/:id" element={<ProductDetailPage />} />
                                 <Route path="/success" element={<SuccessPage />} />
                                 <Route path="/checkout" element={<CheckoutPage />} />
+                                <Route path="/admin" element={<Admin />} />
                                 <Route path="/admin/orders" element={<AdminOrdersPage />} />
                                 <Route path="*" element={<HomePage />} />
                             </Route>
