@@ -7,7 +7,7 @@ import { useCart } from '@/hooks/useCart';
 import { initializeCheckout } from '@/api/EcommerceApi';
 import { useToast } from '@/hooks/use-toast';
 import { placeholderImage } from '@/components/ProductCard';
-
+import { supabase } from '@/lib/supabaseClient';
 const PHONE_PATTERN = /^03[0-9]{9}$/;
 
 const INPUT_CLASS =
@@ -86,6 +86,26 @@ function CheckoutPage() {
         status: 'pending',
       };
 
+      // Save order to Supabase (for admin panel)
+      try {
+        await supabase.from('orders').insert(
+          cartItems.map((i) => ({
+            order_id: order.id,
+            customer_name: form.name.trim(),
+            email: form.email.trim(),
+            phone: form.phone1.trim(),
+            address: `${form.address.trim()}, ${form.city.trim()}`,
+            product: i.product.title,
+            size: i.size || '',
+            color: i.variant.title,
+            quantity: i.quantity,
+            price: i.variant.sale_price_formatted || i.variant.price_formatted,
+          }))
+        );
+      } catch (supabaseErr) {
+        console.error('Supabase order save failed:', supabaseErr);
+        // Don't block checkout if this fails
+      }
       try {
         const stored = JSON.parse(localStorage.getItem('nsz-orders') || '[]');
         stored.unshift(order);
