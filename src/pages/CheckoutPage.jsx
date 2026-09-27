@@ -118,8 +118,9 @@ function CheckoutPage() {
         const successUrl = `${window.location.origin}/success?checkout=success&o=${order.id}`;
         const cancelUrl = `${window.location.origin}/checkout`;
 
-        const { url } = await initializeCheckout({ items, successUrl, cancelUrl });
-        window.location.href = url;
+            // Skip Hostinger hosted payment page — COD only, order already saved above
+        window.location.href = successUrl;
+  
       } catch (err) {
         setSubmitting(false);
         toast({
