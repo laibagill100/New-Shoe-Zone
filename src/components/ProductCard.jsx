@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Eye, ShoppingBag, Zap, Loader2 } from 'lucide-react';
 import { useCart } from '@/hooks/useCart';
@@ -15,6 +16,7 @@ export const placeholderImage =
 const BATA_SIZES = ['40/6', '41/7', '42/8', '43/9', '44/10', '45/11'];
 
 const ProductCard = ({ product, index = 0 }) => {
+  const navigate = useNavigate();
   const { addToCart } = useCart();
   const { toast } = useToast();
   const { t } = useLanguage();
@@ -81,20 +83,8 @@ const ProductCard = ({ product, index = 0 }) => {
         return;
       }
 
-      setBuyingNow(true);
-      try {
-        const successUrl = `${window.location.origin}/success?checkout=success`;
-        const cancelUrl = `${window.location.href}`;
-        const { url } = await initializeCheckout({
-          items: [{ variant_id: variant.id, quantity: 1 }],
-          successUrl,
-          cancelUrl,
-        });
-        window.location.href = url;
-      } catch (error) {
-        setBuyingNow(false);
-        toast({ title: t('buyItNow'), description: error.message || 'Checkout failed. Please try again.', variant: 'destructive' });
-      }
+             addToCart(product, variant, selectedSize, 1);
+        navigate('/checkout'); 
     },
     [product, variant, selectedSize, toast, t],
   );
