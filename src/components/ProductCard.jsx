@@ -83,8 +83,8 @@ const ProductCard = ({ product, index = 0 }) => {
         return;
       }
 
-             addToCart(product, variant, selectedSize, 1);
-        navigate('/checkout'); 
+         addToCart(product, variant, 1, variant.inventory_quantity, selectedSize);
+      navigate('/checkout'); 
     },
     [product, variant, selectedSize, toast, t],
   );
