@@ -99,7 +99,7 @@ function CheckoutPage() {
             size: i.size || '',
             color: i.variant.title,
             quantity: i.quantity,
-            price: i.variant.sale_price_formatted || i.variant.price_formatted,
+   price: i.variant.sale_price || i.variant.price,
           }))
         );
       } catch (supabaseErr) {
